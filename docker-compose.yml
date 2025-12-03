@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: chatbot_postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-chatbot_db}
+    ports:
+      - "${DB_PORT:-5435}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chatbot_network
+
+volumes:
+  postgres_data:
+
+networks:
+  chatbot_network:
+    driver: bridge
